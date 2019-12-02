@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>CloudWalk</title>
+
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="dist/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="dist/css/fonts.googleapis.css" rel="stylesheet">
+    <!-- image gallery -->
+    <link href="plugins/nanogallery2/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- time picker-->
+    <link rel="stylesheet" href="plugins/daterangepicker2/daterangepicker.css">
+    <!-- cropper.js-->
+    <link rel="stylesheet" href="plugins/cropper/cropper.css">
+    <!-- loading -->
+    <link rel="stylesheet" href="plugins/loading/dist/ladda-themeless.min.css">
+
+    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="dist/css/index_reid0.css">
+
+
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse" style="overflow-x: hidden; overflow-y: hidden;">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+        </ul>
+        <div class="nav_title"
+             style="width: 500px;margin-left:  auto;margin-right:  auto;text-align: center;font-size: 1.7em;font-weight: 500;letter-spacing: 2px;color: white;">
+            云从研究院&nbsp·&nbsp行人跨镜追踪标注工具
+        </div>
+        <!-- Right navbar links -->
+
+
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="dist/img/yc/logo.png" alt="CloudWalk Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">云从科技</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                行人跨镜追踪
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-car"></i>
+                            <p>
+                                汽车跟踪
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-control">
+                <div class="select_items col-md-3">
+                    <div class="select_itmes_line0">
+
+                        <div class="form-group">
+                            <select class="form-control" id="database_list">
+                                <!-- 弄成读取数据的形式 -->
+                                <!-- <option>数据源：video_mall_180414</option> -->
+                            </select>
+                        </div>
+                    </div>
+                    <div class="select_itmes_line0">
+                        <div class="btn-group" style="display: inline-block;">
+                            <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
+                                    data-target="#myModal">选择监控摄像头
+                            </button>
+                        </div>
+                        <div class="btn-group" style="display: inline-block;">
+                            <input type="text" class="form-control" id='seleted_camera' disabled=true value="当前相机">
+
+                        </div>
+
+                    </div>
+                    <div class="select_itmes_line0">
+                        <div class="btn-group" style="display: inline-block">
+                            <button type="button" class="btn btn-block btn-outline-secondary disabled">当前标注视频</button>
+                        </div>
+                        <div class="btn-group" style="display: inline-block">
+                            <select class="form-control" id="video_list">
+                                <!-- 弄成读取数据的形式 -->
+
+                            </select>
+                        </div>
+
+                    </div>
+                    <div class="select_itmes_line0">
+                        <div class="btn-group" style="display: inline-block">
+                            <button type="button" class="btn btn-block btn-outline-secondary disabled">当前标注结果</button>
+                        </div>
+                        <div class="btn-group" style="display: inline-block">
+                            <select class="form-control" id="label_result_list">
+                                <!-- 弄成读取数据的形式 -->
+
+                            </select>
+                        </div>
+                    </div>
+                    <div class="select_itmes_line0">
+                        <div class="btn-group" style="display: inline-block">
+                            <button type="button" class="btn btn-block btn-outline-secondary disabled">当前标注进度</button>
+                        </div>
+                        <div class="btn-group" style="display: inline-block">
+                            <select class="form-control" id="id_list">
+                                <!-- 弄成读取数据的形式 -->
+
+                            </select>
+                        </div>
+                        <div class="btn-group" style="display: inline-block">
+                            <input type="text" class="form-control" id='seleted_id' disabled=true value="当前标注ID">
+                        </div>
+                    </div>
+
+                </div>
+                <div class="selected_image">
+                    <div id="nanogallery_one">
+                        <div id="nanogallery0_text">请上传检索图，最多五张</div>
+                    </div>
+                </div>
+
+                <div style="clear: both;"></div>
+            </div>
+            <div class="query_result_content card card-primary card-outline" style="height:550px">
+                <div class="card-header">
+                    <h5 class="card-title">
+                        <div class="btn-group" style="display: inline-block;">
+                            <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
+                                    data-target="#attrModel">帮助
+                            </button>
+                        </div>
+                        <div class="btn-group" style="display: inline-block; left: 670px">
+                            <button class="btn btn-block btn-primary"
+                                    >确定，下一个标注
+                            </button>
+                        </div>
+                    </h5>
+
+
+                </div>
+                <div class="absolute all_width" id="scrollContent" style="top: 35px;left: 0px;overflow: auto;bottom: 1px;">
+                    <div class="relative" style="overflow: auto">
+                        <div class="container-fluid card-body" id="gallery_list">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="card card-primary border border-white">
+                                        <div id="nanogallery2_container0">
+                                            <div id="nanogallery2_text">暂无查询结果</div>
+                                        </div>
+                            </div>
+                        </div>
+                        <div class="col-md-1">
+                         <input class="form-check-input " type="checkbox" id="c1" style="width:40px; height:40px;">
+                        <input class="form-check-input " type="checkbox" id="c2" style="width:40px; height:40px; margin-left:50px ">
+
+                        </div>
+                        <div class="col-md-5">
+                            <div class="card card-primary border border-white ">
+
+                                        <div id="nanogallery2_container1">
+                                            <div id="nanogallery2_text">暂无查询结果</div>
+                                        </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                   </div>
+                </div>
+            </div>
+
+            <!-- /.container-fluid -->
+        </div>
+
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <!--<aside class="control-sidebar control-sidebar-dark">-->
+        <!-- Control sidebar content goes here -->
+    <!--</aside>-->
+    <!-- /.control-sidebar -->
+
+    <style>
+      html { height: 100% !important; }
+      body { height: 100% !important; padding-bottom: 0px; }
+      .main-footer { position: fixed; left: 0; right: 0; bottom: 0; }
+    </style>
+    <!-- Main Footer -->
+
+    <footer class="main-footer">
+        <!-- To <div class="float-right d-none d-sm-block-down">
+            Anything you want
+        </div>the right -->
+
+        <!-- Default to the left -->
+      <strong>CloudWalk Technology Co., Ltd.</strong>
+    </footer>
+
+
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+
+
+<!-- Bootstrap -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+<!--time picker-->
+<script src="plugins/daterangepicker2/moment.min.js"></script>
+<script src="plugins/daterangepicker2/daterangepicker.js"></script>
+
+<!-- cropper.js-->
+<script src="plugins/cropper/cropper.js"></script>
+
+<script src="plugins/knob/jquery.knob.js"></script>
+
+<!-- AdminLTE -->
+<script src="dist/js/adminlte.js"></script>
+
+<!--loading-->
+<script src="plugins/loading/dist/spin.min.js"></script>
+<script src="plugins/loading/dist/ladda.min.js"></script>
+
+<script type="text/javascript" src="plugins/iCheck/icheck.min.js"></script>
+
+<script src="dist/js/demo.js"></script>
+<script src="dist/js/pages/dashboard.js"></script>
+<script type="text/javascript" src="plugins/nanogallery2/jquery.nanogallery2.js"></script>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">选择摄像头</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>摄像头列表</label>
+                    <select multiple="" class="form-control" id="camera_list">
+
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fetch_video_data()">确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="attrModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+    <div class="modal-dialog">
+        <div class="modal-content"  style="width:900px">
+            <div class="modal-header">
+                <h4 class="modal-title" id="attrLabel">标注流程说明</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <h5>一.界面说明</h5>
+                <p>1.左上角按钮区用于选区标注对象</p>
+                <p>2.右上方区用于展示标注对象</p>
+                <p>3.中下方显示50个近似的标注对象</p>
+                <h5>二.左上角按钮区选取标注对象</h5>
+                <p>1.下拉框选取数据集</p>
+                <p>2.点击“选择监控摄像头”按钮，在弹出页面选择要标注的摄像机名字</p>
+                <p>3.下拉框选取标注视频</p>
+                <p>4.下拉框选取标注结果：自动根据用户名新建选项，也可浏览他人的标注结果</p>
+                <p>5.（可选）下拉框选区特定ID，主要用于回顾之前的标记，同时展示标注进度</p>
+                <h5>三.中下方进行行人身份标注</h5>
+                <p>1.共显示50个类似用户</p>
+                <p>2.如果其中一个框内的人和上方的标注对象属于同一个人，请选中对应的选框，会出现打勾以及蓝色边框示意</p>
+                <p>3.点击中间的按钮“确定，下一个标注”标注下一个</p>
+                <h5>提示</h5>
+                <p>1.点击小图可以查看大图</p>
+                <p>2.中下方框内的照片可能较多，可左右拖动切换</p>
+                <p>3.每个标注都会自动保存</p>
+                <p>4.请在1920x1080分辨率下使用，推荐使用chrome浏览器</p>
+                <p>5.问题建议可发邮件至kezaidan@cloudwalk.cn</p>
+                <!-- TODO: 勾选过的后面会出现，确定代表复杂的含义 -->
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="image_edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="imageLabel">截取图片</h4>
+            </div>
+            <div class="modal-body">
+                <div id="image_edit_container" class="image_container">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" onclick="imageCrop()">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--
+<div style="width: 500px">
+    <img width="100%" id="image2" src="dist/img/photo4.jpg">
+</div>
+
+<div style="width: 300px">
+    <img width="100%" id="image22" src="">
+</div>
+-->
+</body>
+
+<script type="text/javascript" src="dist/js/label.js"></script>
+</html>

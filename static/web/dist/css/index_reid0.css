@@ -1,0 +1,224 @@
+.content{
+    margin-top: 0px;
+}
+.nGY2GThumbnailImg.nGY2TnImg2{
+    opacity:1 !important;
+    width:100% !important;
+    height: 100% !important;
+}
+
+.nGY2GThumbnailTitle.nGY2GThumbnailImageTitle{
+    color: gray !important;
+}
+
+.nGY2paginationItemCurrentPage{
+    background-color: #007bff !important;
+}
+.nGY2paginationItem {
+    background-color: rgba(24,133,255,0.7) !important;
+}
+.nGY2PaginationNext{
+    background-color: rgba(24,133,255,0.7) !important;
+}
+.nGY2PaginationPrev{
+    background-color: rgba(24,133,255,0.7) !important;
+}
+#nanogallery2_container{
+    min-height: 250px;
+}
+.select_items{
+    /*float:left;*/
+    /*display: inline-block;*/
+    padding-left: 30px;
+}
+
+.selected_image{
+    float:left;
+    /*height: 280px;*/
+    /*width: 1200px;*/
+    margin-left: 30px;
+    border: solid gainsboro 1px;
+    text-align: left;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: .5rem;
+    vertical-align:middle;
+}
+/*input[name=datetimes]{*/
+    /*border: 1px solid #6b757c;*/
+    /*height: calc(2.25rem + 2px);*/
+    /*!*color: rgb(73,80,86);*!*/
+    /*color:lightgrey;*/
+    /*border-radius: .25rem;*/
+    /*padding-left: 5px;*/
+    /*padding-right: 5px;*/
+    /*font-size: 0.9em;*/
+    /*width:357px;*/
+/*}*/
+
+/*.select_itmes_line0>.form-group>.form-control{*/
+    /*color: rgb(24,162,184);*/
+    /*border: solid 1px #6b757c !important;*/
+/*}*/
+/*.select_itmes_line2,.select_itmes_line1{*/
+    /*margin-top: 5px;*/
+/*}*/
+
+.btn-outline-secondary{
+    color: gray ;
+}
+
+/*.select_itmes_line3{*/
+    /*text-align: center;*/
+/*}*/
+.custom-file-label{
+    color:gray;
+}
+.custom-file.btn-group>.custom-file-label{
+    border: solid 1px #6b757c !important;
+}
+/*#select3_confirm_button{*/
+    /*width: 160px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*margin-top: 10px;*/
+    /*display: inline-block;*/
+/*}*/
+
+/*#select3_clear_button{*/
+    /*display: inline-block;*/
+    /*width: 100px;*/
+    /*margin-top: 10px;*/
+/*}*/
+
+#nanogallery2_container .nGY2GThumbnailCustomLayer{
+    padding-left: 75px;
+    padding-top: 5px;
+}
+
+#nanogallery2_container .nGY2GThumbnailTitle{
+    font-size: 0.6em;
+}
+#nanogallery2_container .nGY2GThumbnailDescription{
+    margin-top: -5px;
+    font-size: 0.5em;
+}
+.content-wrapper{
+    padding-top: 10px;
+}
+
+.card-title{
+    margin-bottom: 0;
+}
+.card{
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.container-fluid{
+    padding-top: 10px;
+}
+
+#nanogallery0>.nGY2Gallery{
+    text-align:left;
+}
+
+#nanogallery0{
+    margin-top: 9px;
+}
+
+
+#nanogallery0_text{
+    text-align: center;
+    color: lightgray ;
+    font-size: 1.8em;
+    line-height: 160px;
+}
+#nanogallery2_text{
+    text-align: center;
+    color: lightgray ;
+    font-size: 2.5em;
+    line-height: 240px;
+    height: 240px;
+}
+
+.query_result_content{
+    margin-top: 10px;
+}
+
+/*.custom-file{*/
+    /*width: 215px;*/
+/*}*/
+
+.main-header{
+    background-color: #007bff !important;
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: white !important;
+}
+
+
+#image_edit>.modal-dialog>.modal-content{
+    width: 800px;
+}
+
+/*.image_container{*/
+    /*width: 760px;*/
+    /*margin-left: auto;*/
+    /*margin-right: auto;*/
+    /*max-height: 500px;*/
+/*}*/
+
+
+.nav_title{
+    width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 1.7em;
+    font-weight: 500;
+    letter-spacing: 2px;
+    color: white;
+}
+
+.fa-circle:hover{
+    color: red;
+}
+.fa-plus{
+     color: black;
+    Text-Shadow:0 0 0 #000;
+ }
+.fa-remove{
+    color: black;
+    Text-Shadow:0 0 0 #000;
+}
+.nGY2GThumbnailIcons,.nGY2GThumbnailIcon{
+    padding-top: 2px !important;
+    padding-left: 1px !important;
+    padding-right: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+.nGY2Popup{
+    display: none !important;
+}
+
+#download_image{
+    font-size: 0.9em;
+    font-weight: 500;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.select_itmes_line0{
+    margin-bottom: 3px;
+}
+
+.select_itmes_line1{
+    margin-bottom: 5px;
+}
+
+.popover{
+    max-width: 100%; // Max Width of the popover (depending on the container!)
+}

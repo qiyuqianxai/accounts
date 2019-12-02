@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title>CloudWalk</title>
+
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="dist/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="dist/css/fonts.googleapis.css" rel="stylesheet">
+    <!-- image gallery -->
+    <link href="plugins/nanogallery2/css/nanogallery2.min.css" rel="stylesheet" type="text/css">
+    <link href="plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <!-- time picker-->
+    <link rel="stylesheet" href="plugins/daterangepicker2/daterangepicker.css">
+    <!-- cropper.js-->
+    <link rel="stylesheet" href="plugins/cropper/cropper.css">
+    <!-- loading -->
+    <link rel="stylesheet" href="plugins/loading/dist/ladda-themeless.min.css">
+
+    <link rel="stylesheet" href="plugins/iCheck/all.css">
+    <link rel="stylesheet" href="dist/css/index_reid0.css">
+
+    <!-- https://stackoverflow.com/questions/31075893/im-getting-favicon-ico-error -->
+    <link rel="shortcut icon" href="#"/>
+</head>
+
+<body class="hold-transition sidebar-mini sidebar-collapse" style="overflow-x: hidden; overflow-y: hidden;">
+<div class="wrapper">
+    <nav class="main-header navbar navbar-expand bg-white navbar-light border-bottom">
+        <!-- Left navbar links -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" data-widget="pushmenu" href="#"><i class="fa fa-bars"></i></a>
+            </li>
+        </ul>
+        <div class="nav_title"
+             style="width: 600px;margin-left:  auto;margin-right:  auto;text-align: center;font-size: 1.7em;font-weight: 500;letter-spacing: 2px;color: white;">
+            云从研究院&nbsp·&nbsp行人质量分标注工具
+        </div>
+        <!-- Right navbar links -->
+
+
+    </nav>
+    <!-- /.navbar -->
+
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+        <!-- Brand Logo -->
+        <a href="#" class="brand-link">
+            <img src="dist/img/yc/logo.png" alt="CloudWalk Logo" class="brand-image img-circle elevation-3"
+                 style="opacity: .8">
+            <span class="brand-text font-weight-light">云从科技</span>
+        </a>
+
+        <!-- Sidebar -->
+        <div class="sidebar">
+
+            <!-- Sidebar Menu -->
+            <nav class="mt-2">
+                <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                    data-accordion="false">
+                    <!-- Add icons to the links using the .nav-icon class
+                         with font-awesome or any other icon font library -->
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-user"></i>
+                            <p>
+                                行人跨镜追踪
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fa fa-car"></i>
+                            <p>
+                                汽车跟踪
+                            </p>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- /.sidebar-menu -->
+        </div>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <div class="content">
+            <div class="container-control">
+                <div class="row">
+                    <div class="select_items col-md-4">
+                        <div class="select_itmes_line1">
+                            <div class="input-group">
+                                <div class="left input-group-prepend">
+                                    <button class="btn btn-block btn-outline-secondary" disabled=true
+                                    >切换到单图标注模式
+                                    </button>
+                                </div>
+                                <button class="btn btn-block btn-outline-secondary form-control" type="button" onclick="window.location.href='quality_score_multi_label.html'"
+                                >切换到多图检查模式
+                                </button>
+                            </div>
+                        </div>
+                        <div class="select_itmes_line1">
+                            <select class="form-control" id="database_list">
+                                <!-- 弄成读取数据的形式 -->
+                                <!-- <option>数据源：video_mall_180414</option> -->
+                            </select>
+                        </div>
+                        <div class="select_itmes_line1">
+                            <div class="input-group">
+                                <div class="left input-group-prepend">
+                                    <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
+                                            data-target="#myModal">选择标注对象批次
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control" id='seleted_batch' disabled=true
+                                       value="当前标注对象批次">
+                            </div>
+                        </div>
+                        <div class="select_itmes_line1">
+                            <div class="input-group">
+                                <div class="left input-group-prepend">
+                                    <button type="button" class="btn btn-block btn-outline-secondary disabled">当前标注结果
+                                    </button>
+                                </div>
+                                <select class="form-control" id="label_result_list">
+                                    <!-- 弄成读取数据的形式 -->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="select_itmes_line1">
+                            <div class="input-group">
+                                <div class="left input-group-prepend">
+                                    <button type="button" class="btn btn-block btn-outline-secondary disabled">
+                                        当前标注进度
+                                    </button>
+                                    <select class="form-control" id="id_list">
+                                        <!-- 弄成读取数据的形式 -->
+                                    </select>
+                                </div>
+                                <input type="text" class="form-control" id='seleted_id' disabled=true value="当前标注ID">
+                            </div>
+                        </div>
+                        <div class="select_itmes_line1">
+                            <div class="input-group">
+                                <div class="left input-group-prepend">
+                                    <button type="button" class="btn btn-block btn-outline-secondary disabled">
+                                        历史标注进度
+                                    </button>
+                                </div>
+                                <input type="text" class="form-control" id='history_id' disabled=true value="历史标注索引">
+                            </div>
+                        </div>
+
+
+                        <div class="query_result_content card card-primary card-outline" style="height:560px">
+                            <div class="card-header">
+                                <h5 class="card-title">
+                                    <h3 class="card-title">待标注人体</h3>
+
+                                </h5>
+                            </div>
+                            <div class="absolute all_width" id="scrollContent" style="overflow: auto;bottom: 1px;">
+                                <div class="container-fluid card-body" id="gallery_list">
+                                    <div class="row">
+
+                                        <div class="col-md-12">
+                                            <div class="card card-primary border border-white">
+                                                <div class="selected_image">
+                                                    <div id="nanogallery_one">
+                                                        <div id="nanogallery0_text">被标注人的图片</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card card-primary card-outline">
+
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form role="form">
+                                <div class="card-body">
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>是否真人:</label>
+                                                <a id="is_real_man_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <input type="radio" name="is_real_man" id="is_real_man_0"
+                                                                   value="0" style="width:20px; height:20px">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true value="0:是真人">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <input type="radio" name="is_real_man" id="is_real_man_1"
+                                                                   value="1" style="width:20px; height:20px">
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true value="1:非真人">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <button type="button" class="btn btn-block btn-outline-primary" id="step_one_clear_button" onclick="step_one_clear()">
+                                                    一键通过步骤1
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>是否有非机动车:</label>
+                                                <a id="has_vehicle_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="has_vehicle" id="has_vehicle_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:无非机动车">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="has_vehicle" id="has_vehicle_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:骑非机动车">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>是否含打印文字:</label>
+                                                <a id="has_print_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="has_print" id="has_print_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:无打印文字">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="has_print" id="has_print_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:含打印文字">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>是否多人:</label>
+                                                <a id="is_multi_person_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="is_multi_person"
+                                                               id="is_multi_person_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:非多人">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="is_multi_person"
+                                                               id="is_multi_person_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:是多人">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <HR>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>截断_缺失程度:</label>
+                                                <a id="crop_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_level" id="crop_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:0-5%几乎没有截断">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_level" id="crop_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:5-20%少量截断">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_level" id="crop_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:20-45%较多截断">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_level" id="crop_level_3"
+                                                               value="3" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="3:45%+严重截断">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>边界不准程度:</label>
+                                                <a id="crop_bad_border_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_bad_border_level"
+                                                               id="crop_bad_border_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:0-5%几乎没有多余">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_bad_border_level"
+                                                               id="crop_bad_border_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:5-20%少量多余">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="crop_bad_border_level"
+                                                               id="crop_bad_border_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:20%+严重多余">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>遮挡程度:</label>
+                                                <a id="occlusion_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="occlusion_level"
+                                                               id="occlusion_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:0-5%几乎没有遮挡">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="occlusion_level"
+                                                               id="occlusion_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:5-20%少量遮挡">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="occlusion_level"
+                                                               id="occlusion_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:20-45%较多遮挡">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="occlusion_level"
+                                                               id="occlusion_level_3"
+                                                               value="3" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="3:45%+严重遮挡">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <HR>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>模糊度:</label>
+                                                <a id="blur_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="blur_level"
+                                                               id="blur_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:清晰">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="blur_level"
+                                                               id="blur_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:有些模糊">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="blur_level"
+                                                               id="blur_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:严重模糊">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>亮度:</label>
+                                                <a id="brightness_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="brightness_level"
+                                                               id="brightness_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:亮度适中">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="brightness_level"
+                                                               id="brightness_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:亮度较差">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="brightness_level"
+                                                               id="brightness_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:亮度极差">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>姿态:</label>
+                                                <a id="pose_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="pose_level"
+                                                               id="pose_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:正常姿态">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="pose_level"
+                                                               id="pose_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:运动幅度较大">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="pose_level"
+                                                               id="pose_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:复杂姿态">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>装扮辨识度:</label>
+                                                <a id="contrast_level_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="contrast_level"
+                                                               id="contrast_level_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:正常装束">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="contrast_level"
+                                                               id="contrast_level_1"
+                                                               value="1" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:常见装束">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="contrast_level"
+                                                               id="contrast_level_2"
+                                                               value="2" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="2:难以分辨装束">
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-lg-2">
+                                                <label>是否在镜或玻璃后:</label>
+                                                <a id="is_after_glass_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                                <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text">
+                                                        <input type="radio" name="is_after_glass"
+                                                               id="is_after_glass_0"
+                                                               value="0" style="width:20px; height:20px">
+                                                    </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="0:正常">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                        <input type="radio" name="is_after_glass"
+                                                               id="is_after_glass_1"
+                                                               value="1" style="width:20px; height:20px">
+
+                                                        </span>
+                                                    </div>
+                                                    <input type="text" class="form-control" disabled=true
+                                                           value="1:在镜子或玻璃后">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-1">
+
+                                            </div>
+                                            <div class="col-lg-2">
+
+                                                <button type="button" class="btn btn-block btn-outline-primary" id="step_three_clear_button" onclick="step_three_clear()">
+                                                    一键通过步骤3
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                    <div class="row">
+                                        <a id="card-footer_help" data-toggle="popover" data-placement="auto" data-trigger="hover" >
+                                        <img class="commentAvatarImage" src="dist/img/question_mark_gray.jpg" style="height: 16px;width: 16px"/></a>
+                                        <div class="col-md-9">
+
+                                        </div>
+                                        <div class="btn-group">
+                                            <button class="btn btn-primary" id='confirm_current_label'
+                                                    type="button" onclick="get_next_id_data();return false"
+                                            >确认无误，下一个
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </div>
+
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <!--<aside class="control-sidebar control-sidebar-dark">-->
+    <!-- Control sidebar content goes here -->
+    <!--</aside>-->
+    <!-- /.control-sidebar -->
+
+    <style>
+        html {
+            height: 100% !important;
+        }
+
+        body {
+            height: 100% !important;
+            padding-bottom: 0px;
+        }
+
+        .main-footer {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+    </style>
+    <!-- Main Footer -->
+
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+
+
+<!-- Bootstrap -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!--
+
+<script type="text/javascript" src="plugins/popper/popper.js"></script>
+<link href="plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />
+<script src=https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.5/umd/popper.min.js></script>  -->
+<script type="text/javascript" src="plugins/popper/umd/popper.min.js"></script>
+
+<script type="text/javascript" src="plugins/bootstrap/js/bootstrap.min.js"></script>
+<!--time picker-->
+<script src="plugins/daterangepicker2/moment.min.js"></script>
+<script src="plugins/daterangepicker2/daterangepicker.js"></script>
+
+<!-- cropper.js-->
+<script src="plugins/cropper/cropper.js"></script>
+
+<script src="plugins/knob/jquery.knob.js"></script>
+
+<!-- AdminLTE -->
+<script src="dist/js/adminlte.js"></script>
+
+<!--loading-->
+<script src="plugins/loading/dist/spin.min.js"></script>
+<script src="plugins/loading/dist/ladda.min.js"></script>
+
+<script type="text/javascript" src="plugins/iCheck/icheck.min.js"></script>
+
+<script src="dist/js/demo.js"></script>
+<script src="dist/js/pages/dashboard.js"></script>
+<script type="text/javascript" src="plugins/nanogallery2/jquery.nanogallery2.js"></script>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">选择标注对象批次</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>序号范围列表</label>
+                    <select multiple="" class="form-control" id="batch_list">
+
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fetch_batch_data();return false">确定
+                </button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="attrModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="width:900px">
+            <div class="modal-header">
+                <h4 class="modal-title" id="attrLabel">标注流程说明</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+
+            </div>
+            <div class="modal-body">
+                <h5>一.界面说明</h5>
+                <p>1.左上角按钮区用于选取标注对象<br>
+                    2.右上方区用于展示标注对象<br>
+                    3.中下方显示50个近似的标注对象</p>
+                <h5>二.左上角按钮区选取标注对象</h5>
+                <p>1.下拉框选取数据集<br>
+                    2.点击“选择标注对象序号范围”按钮，在弹出页面选择要标注的对象序号范围<br>
+                    3.下拉框选取标注结果：自动根据用户名新建选项，也可浏览他人的标注结果<br>
+                    4.（可选）下拉框选区特定ID，主要用于回顾之前的标记，同时展示标注进度</p>
+                <h5>三.中下方进行行人身份标注</h5>
+                <p>1.共显示50个类似用户<br>
+                    2.如果其中一个或多个框内的人和上方的标注对象属于同一个人，请选中对应的选框，会出现打勾以及蓝色边框示意<br>
+                    3.点击中间的按钮“确定，下一个标注”标注下一个<br>
+                    4.如果当前被标注对象，也就是上方图片中序列全部质量差（好的定义是完整的单个人体，差的可能：倒影、双人（抱小孩不算双人）、严重遮挡（气球等)、不全（半身人体）），选择对应的选框进行标注</p>
+                <h5>提示</h5>
+                <p>1.点击小图可以查看大图<br>
+                    2.中下方框内的照片可能较多，可左右拖动切换<br>
+                    3.每个标注都会自动保存<br>
+                    4.请在1920x1080分辨率下使用，推荐使用chrome浏览器<br>
+                    5.问题建议可发邮件至kezaidan@cloudwalk.cn<br>
+                    6.标注准测以“精确”为主，模棱两可的对象就不勾选，质量难以评价的尽量算差</p>
+                <!-- TODO: 勾选过的后面会出现，确定代表复杂的含义 -->
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+<!--
+<div style="width: 500px">
+    <img width="100%" id="image2" src="dist/img/photo4.jpg">
+</div>
+
+<div style="width: 300px">
+    <img width="100%" id="image22" src="">
+</div>
+-->
+</body>
+
+<script type="text/javascript" src="dist/js/quality_score_each_label.js"></script>
+</html>
