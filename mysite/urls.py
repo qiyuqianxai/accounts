@@ -23,7 +23,6 @@ from image_shower import views as image_shower_views
 from label import face_inside_label_views
 from label import quality_score_each_label_views
 from label import quality_score_multi_label_views
-from label import face_inside_label_shenhe_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -36,19 +35,22 @@ urlpatterns = [
     url(r'^get_all_data/$', label_views.get_all_data, name='get_all_data'),
     url(r'^single_camera_reid_label/$', label_views.index),
     # 类间
-    url(r'^face_beside_reid_label/$', face_beside_label_views.index),
-    url(r'^face_beside_get_database_id_range_list/$', face_beside_label_views.multi_get_database_id_range_list),
+    url(r'^face_beside_label/$', face_beside_label_views.index),
+    url(r'^face_beside_get_database_list/$', face_beside_label_views.multi_get_database_list),
     url(r'^face_beside_get_all_data/$', face_beside_label_views.get_all_data),
-    # url(r'^multi_get_database_id_range_list/$', multi_label_views.multi_get_database_id_range_list),
+    url(r'^face_beside_get_id_range/$', face_beside_label_views.get_id_range),
+    url(r'^face_beside_save_label_info/$',face_beside_label_views.save_label_info),
+
 
     url(r'^q_index/', image_shower_views.index),
     url(r'^query/$', image_shower_views.query),
 
     # 类内
-    url(r'^face_inside_reid_label/$', face_inside_label_views.index),
+    url(r'^face_inside_label/$', face_inside_label_views.index),
     url(r'^face_inside_get_database_id_range_list/$', face_inside_label_views.multi_get_database),
     url(r'^face_inside_get_all_data/$', face_inside_label_views.get_all_data),
-    url(r'^get_id_range/$',face_inside_label_views.get_id_range),
+    url(r'^face_inside_get_id_range/$',face_inside_label_views.get_id_range),
+    url(r'^face_inside_save_label_info/$', face_inside_label_views.save_label_info),
 
     url(r'^quality_score_each_label/$', quality_score_each_label_views.index),
     url(r'^quality_get_database_batch_list/$', quality_score_each_label_views.quality_get_database_batch_list),

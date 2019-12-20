@@ -49,7 +49,7 @@
             </ul>
             <div class="nav_title"
                 style="width: 600px;margin-left:  auto;margin-right:  auto;text-align: center;font-size: 1.7em;font-weight: 500;letter-spacing: 2px;color: white;">
-                云从研究院&nbsp·&nbsp人脸类内清洗标注工具
+                云从研究院&nbsp·&nbsp人脸类间清洗标注工具
             </div>
             <!-- Right navbar links -->
 
@@ -76,18 +76,18 @@
                         <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-user"></i>
+                            <a href="http://127.0.0.1:8000/static/web/face_inside_reid_label.html" class="nav-link">
+                                <i class="nav-icon fa fa-star"></i>
                                 <p>
-                                    行人跨镜追踪
+                                    类内标注
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-car"></i>
+                            <a href="http://127.0.0.1:8000/static/web/face_beside_reid_label.html" class="nav-link">
+                                <i class="nav-icon fa fa-star"></i>
                                 <p>
-                                    汽车跟踪
+                                    类间标注
                                 </p>
                             </a>
                         </li>
@@ -106,8 +106,13 @@
 
             <!-- Main content -->
             <div class="content row">
-                <div class="container-control col-md-3">
-                    <div class="select_items">
+                <div class="container-control col-lg-2">
+                    <div class="select_items" style="
+                            padding-left: 0px;
+                            border-left-width: 1px;
+                            margin-left: 5px;
+                            margin-right: 5px;
+                        ">
                         <div class="select_itmes_line1">
                             <select class="form-control" id="database_list">
                                 <!-- 弄成读取数据的形式 -->
@@ -117,7 +122,7 @@
                         <div class="select_itmes_line1">
                             <div class="input-group">
                                 <div class="left input-group-prepend">
-                                    <button id = "test_btn" class="btn btn-block btn-outline-secondary disabled">当前标注对象id范围
+                                    <button id = "test_btn" class="btn btn-block btn-outline-secondary disabled">当前标注对象Label
                                     </button>
                                 </div>
                                 <input type="text" class="form-control" id='seleted_id_range' disabled=true
@@ -162,42 +167,41 @@
                     <div class="query_result_content card card-primary card-outline" style="height:650px">
                         <div class="card-header">
                             <h5 class="card-title">
-                                <div class="btn-group" style="float:left">
-                                    <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
-                                        data-target="#attrModel">帮助
-                                    </button>
-                                </div>
+                                <!--<div class="btn-group" style="float:left">-->
+                                    <!--<button class="btn btn-block btn-outline-secondary" data-toggle="modal"-->
+                                        <!--data-target="#attrModel">帮助-->
+                                    <!--</button>-->
+                                <!--</div>-->
                                 <div class="btn-group" style="float:left;">
-                                    <button class="btn btn-block btn-primary">若下方图片和右方区域图片相似，请勾选</button>
-                                </div>
-                                <div class="btn-group" style="float:left; left: 35%">
-
+                                    <button class="btn btn-block btn-primary">判断下方与右方图片是否相似</button>
                                 </div>
                             </h5>
                         </div>
                         <div class="absolute all_width" id="scrollContent" style="width:300px;height:700px;bottom: 1px;">
                             <div class="container-fluid card-body" id="gallery_list">
                                 <div class="pics-wrap" id="result_pics-wrap"
-                                    style="display: block; opacity: 1; top: 0px; left: 0px; width: 400px; height: 400px;">
+                                    style="display: block; opacity: 1; top: 0px; left: 0px;">
                                 </div>
-                                <span>
-                                    <!--<button class="btn btn-block btn-primary"></button>-->
-                                    <span class="btn btn-block btn-primary" id='result_pic_num'></span>
-                                    <!--<button class="btn btn-block btn-primary" id="next_result_pic">下一张</button>-->
-                                    <!--<button class="btn btn-block btn-primary" id="back_result_pic">上一张</button>-->
-                                </span>
                             </div>
                         </div>
+                        <div class="card-footer">
+                            <span class="btn btn-block btn-primary" id='rest_num'>剩余次类图片数:</span>
+                            <span class="btn btn-block btn-primary" id='pass_num'>已放弃图片数:</span>
+                        </div>
                     </div>
-
-                    <div style="clear: both;"></div>
                 </div>
-                <div class="main-pics col-md-8">
-                    <span class="del_pic" style="width: 100px;height: 100px;padding: 20px">
-                        <button class="btn btn-block btn-primary">请勾选下方区域中明显不同于其它人物的图片</button>
+                <div class="main-pics" style="margin-left: 20px;">
+                    <span style="width: 100px;height: 100px;padding: 20px">
+                        <button class="btn btn-block btn-primary">请删除下方区域中明显不同于其它人物的图片</button>
                     </span>
-                    <div class="selected_image" style="height: 750px;margin-top: 10px;margin-bottom: 20px;
-							overflow-x: auto;" id="search_images">
+                    <div class="selected_image card card-primary card-outline" style="
+							height: 750px;
+							margin-top: 10px;
+							margin-bottom: 20px;
+							overflow-x: auto;
+							margin-right: 0px;
+							margin-left: 0px;
+							" id="search_images">
                     </div>
                 </div>
             </div>
@@ -339,6 +343,6 @@
     </div>
 </body>
 
-<script type="text/javascript" src="dist/js/face_inside_label.js"></script>
+<script type="text/javascript" src="dist/js/face_beside_label.js"></script>
 
 </html>

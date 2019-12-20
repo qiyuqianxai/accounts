@@ -74,18 +74,26 @@
                         <!-- Add icons to the links using the .nav-icon class
                          with font-awesome or any other icon font library -->
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-user"></i>
+                            <a href="/index/" class="nav-link">
+                                <i class="nav-icon fa fa-star"></i>
                                 <p>
-                                    行人跨镜追踪
+                                    主页
                                 </p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
-                                <i class="nav-icon fa fa-car"></i>
+                            <a href="/face_inside_label/" class="nav-link">
+                                <i class="nav-icon fa fa-star"></i>
                                 <p>
-                                    汽车跟踪
+                                    类内标注
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/face_beside_label/" class="nav-link">
+                                <i class="nav-icon fa fa-star"></i>
+                                <p>
+                                    类间标注
                                 </p>
                             </a>
                         </li>
@@ -103,103 +111,116 @@
             <!-- /.content-header -->
 
             <!-- Main content -->
-            <div class="select_items row" style="margin:0 auto; width:1700px; border:1px">
-                <div class="select_itmes_line1">
+            <div class="select_items row" style="margin:0 auto;width:1700px;border:1px;padding-left: 0px;">
+                <div class="select_itmes_line1 col-lg-2">
                     <select class="form-control" id="database_list">
                         <!-- 弄成读取数据的形式 -->
                         <!-- <option>数据源：video_mall_180414</option> -->
                     </select>
                 </div>
-                <div class="select_itmes_line1">
+                <div class="select_itmes_line1 col-lg-2">
                     <div class="input-group">
                         <div class="left input-group-prepend">
-                            <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
-                                    data-target="#myModal">选择标注对象序号范围
+                            <button class="btn btn-block btn-outline-secondary">
+                                当前标注对象序号范围
                             </button>
                         </div>
                         <input type="text" class="form-control" id='seleted_id_range' disabled=true
                                     value="当前标注对象序号范围">
                     </div>
                 </div>
-                <div class="select_itmes_line1">
+                <div class="select_itmes_line1 col-lg-2">
                     <div class="input-group">
                         <div class="left input-group-prepend">
-                            <button type="button"
-                                    class="btn btn-block btn-outline-secondary disabled">当前标注结果</button>
-                        </div>
-                        <select class="form-control" id="label_result_list">
-                            <!-- 弄成读取数据的形式 -->
-                        </select>
-                    </div>
-                </div>
-                <div class="select_itmes_line1">
-                    <div class="input-group">
-                        <div class="left input-group-prepend">
-                            <button type="button" class="btn btn-block btn-outline-secondary disabled">
+                            <button type="button" class="btn btn-block btn-outline-secondary">
                                 当前标注进度
                             </button>
                             <select class="form-control" id="id_list">
                                 <!-- 弄成读取数据的形式 -->
                             </select>
                         </div>
-                        <input type="text" class="form-control" id='seleted_id' disabled=true value="当前标注ID">
                     </div>
                 </div>
-                <div class="select_itmes_line1">
+                <div class="select_itmes_line1 col-lg-2">
+                    <div class="input-group">
+                        <div class="left input-group-prepend">
+                            <button type="button"
+                                    class="btn btn-block btn-outline-secondary">当前标注人</button>
+                        </div>
+                        <input type="text" class="form-control" id='labeler' disabled=true value="标注人">
+                    </div>
+                </div>
+                <div class="select_itmes_line1 col-lg-2">
                     <div class="input-group">
                         <div class="left input-group-prepend">
                             <button type="button" class="btn btn-block btn-outline-secondary disabled">
-                                上一次标注位置
+                                当前标注ID
                             </button>
                         </div>
-                        <input type="text" class="form-control" id='history_id' disabled=true value="历史标注索引">
+                        <input type="text" class="form-control" id='seleted_id' disabled=true value="当前标注ID">
                     </div>
                 </div>
-                <div class="btn-group" style="float:left">
+                <div class="btn-group col-lg-2" style="float:left">
                     <button class="btn btn-block btn-outline-secondary" data-toggle="modal"
-                            data-target="#attrModel">帮助
+                            data-target="#attrModel" style="
+                                                                border-bottom-width: 3px;
+                                                                height: 39px;
+                                                                border-top-width: 3px;
+                                                            ">帮助
                     </button>
+                </div>
+                <div class="select_itmes_line1 col-lg-2">
+                    <div class="input-group">
+                        <div class="left input-group-prepend">
+                            <button type="button" class="btn btn-block btn-outline-secondary disabled">
+                                标注人
+                            </button>
+                        </div>
+                        <input type="text" class="form-control" id="old_labeler" disabled=true value="">
+                    </div>
+                </div>
+                <div class="select_itmes_line1 col-lg-2">
+                    <div class="input-group">
+                        <div class="left input-group-prepend">
+                            <button type="button" class="btn btn-block btn-outline-secondary disabled">
+                                审核人
+                            </button>
+                        </div>
+                        <input type="text" class="form-control" id="old_checker" disabled=true value="">
+                    </div>
                 </div>
             </div>
             <div class="content row">
-                <div class="container-control col-md-3">
+                <div class="container-control col-lg-2">
                     <div class="query_result_content card card-primary card-outline" style="height:650px">
                         <div class="card-header">
                             <h5 class="card-title">
-                                <div class="btn-group" style="float:left">
-                                    <span class="btn btn-block btn-primary" id="current_cluster_progress">进度：
-                                    </span>
-                                </div>
-                                <div class="btn-group" style="float:left; left: 35%">
-                                    <span class="btn btn-block btn-primary" id='confirm_current_label'
-                                        onclick="get_next_id_data()">确定，下一个标注
-                                    </span>
-                                </div>
-                                <div class="btn-group" style="float:left; left: 35%">
-
+                                <div>
+                                    <span class="btn btn-block btn-warning" id="search_id"></span>
                                 </div>
                             </h5>
                         </div>
-                        <div class="absolute all_width" id="scrollContent" style="width:300px;height:700px;bottom: 1px;">
+                        <div class="absolute all_width" id="scrollContent" style="width:250px;height:700px;bottom: 1px;">
                             <div class="container-fluid card-body" id="gallery_list">
                                 <div class="pics-wrap" id="search_images-wrap"
-                                    style="display: block; opacity: 1; top: 0px; left: 0px; width: 400px; height: 600px;overflow: auto">
+                                    style="display: block; opacity: 1; top: 0px; left: 0px; width: 250px; height: 576px;overflow-y: auto">
                                 </div>
-                                <div>
-                                    <span class="btn btn-block btn-primary" id="search_id"></span>
-                                    <button class="btn btn-block btn-primary" id="next_group">下一组</button>
-                                    <button class="btn btn-block btn-primary" id="back_group">上一组</button>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <div>
                                     <button class="btn btn-block btn-primary" id="reset_group_link">重置</button>
-                                </div>
                             </div>
                         </div>
                     </div>
                     <div style="clear: both;"></div>
                 </div>
-                <div class="main-pics col-md-9">
-                    <span class="del_pic" style="width: 100px;height: 100px;padding: 20px"><button id="del_sure" class="btn btn-block btn-primary">确认删除</button></span>
-                    <div class="selected_image" style="height: 750px;margin-top: 10px;margin-bottom: 20px;
-							overflow-x: auto;" id="result_pics-wrap">
+                <div class="main-pics col-lg-10">
+                    <span class="del_pic" style="width: 100px;height: 100px;padding: 20px">
+                        <button class="btn btn-block btn-primary">请勾选下方与右方相似的ID或判断分类是否正确，若不正确请重置</button>
+                    </span>
+                    <div class="selected_image card-header" style="height: 650px;margin-top: 10px;margin-bottom: 20px;margin-left: 0px;overflow-y: auto">
+                        <div id = result_pics-wrap></div>
                     </div>
                 </div>
             </div>
@@ -234,14 +255,14 @@
     </style>
     <!-- Main Footer -->
 
-    <!--<footer class="main-footer">-->
-        <!--&lt;!&ndash; To <div class="float-right d-none d-sm-block-down">-->
-            <!--Anything you want-->
-        <!--</div>the right &ndash;&gt;-->
+    <footer class="main-footer">
+        <!-- To <div class="float-right d-none d-sm-block-down">
+            Anything you want
+        </div>the right -->
 
-        <!--&lt;!&ndash; Default to the left &ndash;&gt;-->
-        <!--<strong>CloudWalk Technology Co., Ltd.</strong>-->
-    <!--</footer>-->
+        <!-- Default to the left -->
+        <strong>CloudWalk Technology Co., Ltd.</strong>
+    </footer>
     <!-- ./wrapper -->
 
     <!-- REQUIRED SCRIPTS -->
@@ -274,32 +295,6 @@
     <script src="dist/js/demo.js"></script>
     <script src="dist/js/pages/dashboard.js"></script>
     <script type="text/javascript" src="plugins/nanogallery2/jquery.nanogallery2.js"></script>
-
-    <!-- 模态框（Modal） -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title" id="myModalLabel">选择标注对象序号范围</h4>
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-
-                </div>
-                <div class="modal-body">
-                    <div class="form-group">
-                        <label>序号范围列表</label>
-                        <select multiple="" class="form-control" id="id_range_list">
-
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="fetch_video_data()">确定
-                    </button>
-                </div>
-            </div><!-- /.modal-content -->
-        </div><!-- /.modal -->
-    </div>
     <!-- 模态框（Modal） -->
     <div class="modal fade" id="attrModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
         aria-hidden="true">
@@ -362,5 +357,4 @@
 </body>
 
 <script type="text/javascript" src="dist/js/face_beside_label.js"></script>
-
 </html>
