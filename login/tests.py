@@ -24,6 +24,5 @@ def listimg():
 			imglibs[camera_id][camera_time_range][person_id] =  [os.path.join(realpth, name) for name in select]
 	return imglibs
 
-
 if __name__ == '__main__':
 	listimg()

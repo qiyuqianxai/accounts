@@ -17,46 +17,32 @@ from django.conf.urls import url
 from django.contrib import admin
 from login import views as login_views
 from django.conf.urls import include
-from label import views as label_views
-from label import face_beside_label_views
-from image_shower import views as image_shower_views
-from label import face_inside_label_views
-from label import quality_score_each_label_views
-from label import quality_score_multi_label_views
+from accounts_views import account_labeler_views
+from accounts_views import account_admin_views
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    # 注册
     url(r'^index/', login_views.index),
     url(r'^login/', login_views.login),
     url(r'^register/', login_views.register),
     url(r'^logout/', login_views.logout),
-    #url(r'^captcha', include('captcha.urls')),
-    url(r'^get_database_camera_list/$', label_views.get_database_camera_list, name='get_database_camera_list'),
-    url(r'^get_all_data/$', label_views.get_all_data, name='get_all_data'),
-    url(r'^single_camera_reid_label/$', label_views.index),
-    # 类间
-    url(r'^face_beside_label/$', face_beside_label_views.index),
-    url(r'^face_beside_get_database_list/$', face_beside_label_views.multi_get_database_list),
-    url(r'^face_beside_get_all_data/$', face_beside_label_views.get_all_data),
-    url(r'^face_beside_get_id_range/$', face_beside_label_views.get_id_range),
-    url(r'^face_beside_save_label_info/$',face_beside_label_views.save_label_info),
 
+    # 管理员结账页面
+    url(r'^account_admin/$', account_admin_views.index),
+    url(r'^add_date_to_db/$', account_admin_views.add_date_to_db),
+    url(r'^get_date_task/$', account_admin_views.get_date_task),
+    url(r'^get_task_target/$', account_admin_views.get_task_target),
+    url(r'^update_target/$', account_admin_views.update_target),
+    url(r'^get_labeler_info/$', account_admin_views.get_labeler_info),
+    url(r'^save_labeler_info/$', account_admin_views.save_labeler_info),
+    url(r'^admin_get_total_cost/$', account_admin_views.admin_get_total_cost),
+    # 标注员结账页面
+    url(r'^get_date_and_task/$', account_labeler_views.get_date_and_task),
+    url(r'^account_labeler/$', account_labeler_views.index),
+    url(r'^get_task_detail_info/$', account_labeler_views.get_task_detail_info),
+    url(r'^save_child_task_info/$', account_labeler_views.save_child_task_info),
+    url(r'^get_total_cost/$',account_labeler_views.get_total_cost),
 
-    url(r'^q_index/', image_shower_views.index),
-    url(r'^query/$', image_shower_views.query),
-
-    # 类内
-    url(r'^face_inside_label/$', face_inside_label_views.index),
-    url(r'^face_inside_get_database_id_range_list/$', face_inside_label_views.multi_get_database),
-    url(r'^face_inside_get_all_data/$', face_inside_label_views.get_all_data),
-    url(r'^face_inside_get_id_range/$',face_inside_label_views.get_id_range),
-    url(r'^face_inside_save_label_info/$', face_inside_label_views.save_label_info),
-
-    url(r'^quality_score_each_label/$', quality_score_each_label_views.index),
-    url(r'^quality_get_database_batch_list/$', quality_score_each_label_views.quality_get_database_batch_list),
-    url(r'^quality_get_all_data/$', quality_score_each_label_views.quality_get_all_data),
-
-    url(r'^quality_score_multi_label/$', quality_score_multi_label_views.index),
-    url(r'^quality_multi_get_database_batch_list/$', quality_score_multi_label_views.quality_multi_get_database_batch_list),
-    url(r'^quality_multi_get_all_data/$', quality_score_multi_label_views.quality_multi_get_all_data),
 ]
