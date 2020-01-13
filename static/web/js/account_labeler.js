@@ -171,6 +171,8 @@ function show_child_task_info() {
     var total_cost = 0;
     for(var t=0;t<g_target.length;t++)
     {
+        if (g_target[t].indexOf("任务总数")>-1 || g_target[t].indexOf("每小时任务标注量")>-1)
+            continue;
         if(g_target_weight[g_target[t]]>0)
             table_html+="<th>"+g_target[t]+"/"+g_target_weight[g_target[t]]+"元</th>";
         else
@@ -181,13 +183,23 @@ function show_child_task_info() {
     {
         table_html += "<tr class='child-task-content'>";
         $.each(g_target,function (j,key) {
-            table_html += "<td><input class='target_val' type='text' value='"+ g_all_child_task_info[i][key] +"'></td>"
-            if (key.indexOf("费用") > -1 ){
-                total_cost += parseFloat(g_all_child_task_info[i][key])
+            // 这两项对标注人不可见
+            if (key.indexOf("任务总数") > -1 || key.indexOf("每小时任务标注量") > -1)
+                console.log("");
+            else {
+                if (key.indexOf("费用") > -1 ){
+                total_cost += parseFloat(g_all_child_task_info[i][key]);
+                table_html += "<td><input class='target_val' type='text' value='"+ g_all_child_task_info[i][key] +"' disabled="+true+"></td>"
+
             }
+            else
+                table_html += "<td><input class='target_val' type='text' value='"+ g_all_child_task_info[i][key] +"'></td>"
+            }
+
         });
         table_html += "<td><a class='del_child_task'>删除</a></td></tr>"
     }
+    total_cost = Number(total_cost).toFixed(2);
     table_html += "<tr><th>总费用</th><th>"+total_cost+"<th></tr>";
 
     $("#target-table").html(table_html);
@@ -204,7 +216,14 @@ function show_child_task_info() {
         var add_task_input_html = "<tr class='child-task-content'>";
         for (var i=0;i<g_target.length;i++)
         {
-            add_task_input_html += "<td><input class='target_val' type='text' placeholder='请输入"+g_target[i]+"'></td>"
+            if (g_target[i].indexOf("任务总数")> -1 || g_target[i].indexOf("每小时任务标注量")> -1)
+                console.log("");
+            else {
+                if (g_target[i].indexOf("费用")> -1)
+                    add_task_input_html += "<td><input class='target_val' type='text' disabled="+true+"></td>";
+                else
+                    add_task_input_html += "<td><input class='target_val' type='text' placeholder='请输入"+g_target[i]+"'></td>"
+            }
         }
         add_task_input_html += "</tr>";
         $("#target-table").append(add_task_input_html);
@@ -334,6 +353,7 @@ function get_total_cost() {
         success:function(data){
             var data_json = JSON.parse(data);
             var total_cost = data_json["total_cost"];
+            total_cost = Number(total_cost).toFixed(2);
             $("#target-table").html("<tr><th>"+g_current_date+"</th><th>总费用</th><th>"+total_cost+"</th></tr>");
             $("#task_option").html("")
             },

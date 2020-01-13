@@ -62,8 +62,9 @@ def login(request):
             password = login_form.cleaned_data['password']
             try:
                 user = User.objects.get(name=username)
-                print(User.objects.all())
-                print(username, user.passwd, hash_code(password))
+                print(username)
+                # print(User.objects.all())
+                #print(username, user.passwd, hash_code(password))
                 #if user.passwd == hash_code(password):  # 哈希值和数据库内的值进行比对
                 if user.passwd == password:
                     request.session['is_login'] = True
@@ -72,7 +73,8 @@ def login(request):
                     return redirect('/index/')
                 else:
                     message = "密码不正确！"
-            except:
+            except Exception as e:
+                print(e)
                 message = "用户不存在！"
         return render(request, 'login/login.html', locals())
 

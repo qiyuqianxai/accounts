@@ -129,7 +129,7 @@ function update_date_list() {
             for(var i=0;i<g_all_date_list.length;i++)
             {
                 $('#date_date_list').append('<li class="has-children">\n' +
-                    '                        <a href="#1" title="" class="date-name">'+g_all_date_list[i]+'</a>' +
+                    '                        <a href="#1" title="" class="date-name" style="width: 200px;">'+g_all_date_list[i]+'</a>' +
                     '                        <ul class="sub-menu" id="'+g_all_date_list[i]+'-task-list">\n' +
                     '                        </ul>' +
                     '                    </li>');
@@ -148,7 +148,7 @@ function update_date_list() {
             for(var k=0;k<g_all_date_list.length;k++)
             {
                 $('#labeler_date_list').append('<li class="has-children">' +
-                    '                        <a href="#1" title="" class="date-name">'+g_all_date_list[k]+'</a>' +
+                    '                        <a href="#1" title="" class="date-name" style="width: 200px">'+g_all_date_list[k]+'</a>' +
                     '                        <ul class="sub-menu" id="'+g_all_date_list[k]+'-labeler-list">' +
                     '                        </ul>' +
                     '                    </li>');
@@ -230,7 +230,6 @@ function add_task(){
             });
         }
     })
-
 }
 
 // 获取对应的任务信息
@@ -296,19 +295,28 @@ function get_task_info(task_name) {
 
 // 展示指标编辑页面
 function show_target_info(target) {
-    var table_html = "<tr><th>"+g_current_date+"-"+g_task_name+"</th></tr><tr><th>指标</th><th>单价</th><th>操作</th></tr>";
+    var table_html = "<tr><th>"+g_current_date+"-"+g_task_name+"</th></tr><tr><th style='margin: 0px; padding: 0px'>指标</th><th style='margin: 0px; padding: 0px'>单价</th><th style='margin: 0px; padding: 0px'>操作</th></tr>";
     $.each(target,function (key,val) {
-        table_html += "<tr>" +
-            "<td><input class='target_key' type='text' value='"+ key +"'></td>>" +
+        if (key.indexOf("每小时任务标注量")>-1||key.indexOf("任务总数")>-1)
+        {
+            table_html += "<tr>" +
+            "<th><input class='target_key' type='text' style='color: red' value='"+ key +"'></th>" +
             "<td><input class='target_val' type='text' value='"+ val +"'></td>" +
             "<td><a class='del_target' id="+ key+">删除</a></td>" +
             "</tr>"
+        }
+        else
+            table_html += "<tr>" +
+                "<td><input class='target_key' type='text' value='"+ key +"'></td>>" +
+                "<td><input class='target_val' type='text' value='"+ val +"'></td>" +
+                "<td><a class='del_target' id="+ key+">删除</a></td>" +
+                "</tr>"
     });
     $("#table-container").html("<table id='show-table' class='table-hover'></table>");
 
     $("#show-table").html(table_html);
 
-    $("#target-option").html("<span><a id='add_target' style='margin-right: 100px;'>新增指标</a></span><span><a id='save_target'>保存修改</a></span>")
+    $("#target-option").html("<span><a id='add_target' style='margin-right: 100px;'>新增指标</a></span><span><a id='save_target'>保存修改</a></span>");
 
     $(".del_target").blur().on("click",function () {
         var id = $(this).attr("id");
@@ -429,7 +437,6 @@ function get_labeler_info() {
 // 展示标注信息
 function show_child_task_info(task_labeler_info, all_task) {
     var table_html, target = [],target_weight ,all_child_task_info;
-    // $("#table-container").html("");
     $("#table-container").html("<tr><th>"+g_labeler_name+"</th></tr>");
     for (var i = 0;i<all_task.length;i++)
     {
@@ -439,15 +446,17 @@ function show_child_task_info(task_labeler_info, all_task) {
         target_weight = task_labeler_info[all_task[i]+"_target"];
         for (var key in target_weight)
         {
-            target.push(key)
+            target.push(key);
         }
         table_html += "<tr>";
         for(var t = 0;t<target.length;t++)
         {
+            if (target[t].indexOf("任务总数")>-1 || target[t].indexOf("每小时任务标注量")>-1)
+                continue;
             if(target_weight[target[t]]>0)
-                table_html+="<th class='title'>"+target[t]+"/"+target_weight[target[t]]+"元</th>";
+                table_html+="<th style='margin: 0px; padding: 0px' class='title'>"+target[t]+"/"+target_weight[target[t]]+"元</th>";
             else
-                table_html+="<th class='title'>"+target[t]+"</th>";
+                table_html+="<th style='margin: 0px; padding: 0px' class='title'>"+target[t]+"</th>";
         }
         table_html += "</tr>";
         all_child_task_info = task_labeler_info[all_task[i]];
@@ -455,13 +464,20 @@ function show_child_task_info(task_labeler_info, all_task) {
         {
             table_html += "<tr class='child-task-content'>";
             $.each(target,function (k,key) {
-                table_html += "<td><input class='target_val' type='text' value='"+ all_child_task_info[j][key] +"'></td>"
+                if (key.indexOf("任务总数") < 0 && key.indexOf("每小时任务标注量")<0)
+                    table_html += "<td style='margin: 0px; padding: 0px'><input class='target_val' type='text' value='"+ all_child_task_info[j][key] +"'></td>"
             });
         }
+        table_html += "<tr>";
+        if (target_weight.hasOwnProperty("任务总数"))
+            table_html += "<th>任务总数:"+target_weight["任务总数"]+"</th>";
+        if (target_weight.hasOwnProperty("每小时任务标注量"))
+            table_html += "<th>每小时任务标注量:"+target_weight["每小时任务标注量"]+"</th>";
+        table_html += "</tr>";
         $("#"+all_task[i]+"").html(table_html)
     }
 
-    $("#target-option").html("<span><a id='save-edit'>保存修改</a></span>")
+    $("#target-option").html("<span><a id='save-edit'>保存修改</a></span>");
 
     $("#save-edit").on("click",function () {
         save_child_task_info()

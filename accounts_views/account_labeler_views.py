@@ -1,10 +1,6 @@
 from django.http import JsonResponse
 from django.http import HttpResponse,HttpResponseRedirect
-import os
 import json
-import shutil
-import math
-import redis
 import pymongo
 
 mongodb = pymongo.MongoClient("10.128.128.82", 27017)
@@ -48,8 +44,6 @@ def get_task_detail_info(request):
         target.pop("_id")
     if "info_name" in target.keys():
         target.pop("info_name")
-    # target.pop("_id")
-    # target.pop("info_name")
     all_child_task_info = []
     for dict in user_info.find():
         child_task_info = {}
@@ -60,7 +54,8 @@ def get_task_detail_info(request):
             else:
                 child_task_info[key] = ""
         all_child_task_info.append(child_task_info)
-    resp_jsondata = json.dumps({"all_child_task_info": all_child_task_info,"target":["子任务名称"]+list(target.keys()),"target_weight":target})
+    target_keys = list(filter(lambda key:key.find("任务总数") < 0 and key.find("每小时任务标注量") < 0,list(target.keys())))
+    resp_jsondata = json.dumps({"all_child_task_info": all_child_task_info,"target":["子任务名称"]+target_keys,"target_weight":target})
     return HttpResponse(resp_jsondata)
 
 # 保存标注人员的记录
@@ -76,9 +71,31 @@ def save_child_task_info(request):
     task_db = mongodb[task_name]
     task_db.drop_collection(user_name)
     user_col = task_db[user_name]
+
+    targetcol = task_db["target"]
+    # 指标以target为准
+    target = targetcol.find_one()
+    if "_id" in target.keys():
+        target.pop("_id")
+    if "info_name" in target.keys():
+        target.pop("info_name")
+
     for info in child_info:
         if info["子任务名称"] == "":
             continue
+        ckey = ""
+        for key in info.keys():
+            if key.find("费用")>-1:
+                ckey = key
+                break
+        if ckey=="":
+            ckey = "费用"
+        info[ckey] = 0
+        for key in info.keys():
+            if key != ckey and key in target.keys():
+                if float(target[key]) > 0.0:
+                    print(key,target[key],info[key])
+                    info[ckey] += round(float(target[key])*float(info[key]),2)
         user_col.update({"子任务名称":info["子任务名称"]},{'$set': info},True)
         print("update success")
     resp_jsondata = json.dumps({"msg": "success"})
@@ -101,9 +118,9 @@ def get_total_cost(request):
         for dict in user_db.find():
             if "费用" in dict.keys():
                 try:
-                    total_cost += float(dict["费用"])
+                    total_cost += round(float(dict["费用"]),2)
                 except Exception as e:
-                    # print(e)
+                    print(e)
                     continue
     resp_jsondata = json.dumps({"total_cost": total_cost})
     return HttpResponse(resp_jsondata)

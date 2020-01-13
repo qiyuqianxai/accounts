@@ -2277,7 +2277,7 @@ input::-moz-focus-inner {
   display: none;
   font-weight: 300;
   font-size: 11px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   letter-spacing: 3px;
   margin: 0;
   padding: 0.8rem 0 2rem 1.2rem;

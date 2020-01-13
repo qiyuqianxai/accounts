@@ -55,8 +55,10 @@ def add_date_to_db(request):
                     "info_name": "task_target",
                     "任务开始时间（年-月-日-时）": 0,
                     "任务用时（小时）": 0,
+                    "每小时任务标注量": 0,
                     "框数": 0,
-                    "费用": 0
+                    "费用": 0,
+                    "任务总数": 0,
                 }
                 targetcol.update({"info_name": "task_target"}, {'$set': base_target}, True)
 
@@ -96,8 +98,10 @@ def get_task_target(request):
             "info_name": "task_target",
             "任务开始时间（年-月-日-时）": 0,
             "任务用时（小时）": 0,
+            "每小时任务标注量": 0,
             "框数": 0,
-            "费用": 0
+            "费用": 0,
+            "任务总数":0,
         }
         targetcol.update({"info_name":"task_target"},{'$set': base_target},True)
     target = targetcol.find_one()
@@ -115,6 +119,7 @@ def update_target(request):
     data_json = json.loads(request.body)
     task_name = data_json["task_name"]
     new_target = data_json["target"]
+    cost_target = list(filter(lambda x: float(new_target[x]) > 0, list(new_target.keys())))
     new_target["info_name"] = "task_target"
     task_db = mongodb[task_name]
     targetcol = task_db["target"]
@@ -122,6 +127,21 @@ def update_target(request):
 
     targetcol.update({"info_name":"task_target"},{'$set': new_target}, True)
 
+    user_name_list = list(
+        filter(lambda name: name.find("target") < 0 and name.find("system") < 0, task_db.collection_names()))
+
+    for user_name in user_name_list:
+        user_col = task_db[user_name]
+        for dict in user_col.find():
+            cost = 0
+            for target in cost_target:
+                try:
+                    cost += int(dict[target])*float(new_target[target])
+                except Exception as e:
+                    print(e)
+                    pass
+            user_col.update({'子任务名称': dict['子任务名称']}, {'$set': {"费用":cost}}, True)
+    # 更新新的
     resp_jsondata = json.dumps({"msg":"更新成功！"})
     return HttpResponse(resp_jsondata)
 
@@ -192,17 +212,18 @@ def admin_get_total_cost(request):
     task_list = list(filter(lambda name: name.find(date) > -1, mongodb.database_names()))
     for task_name in task_list:
         task_db =mongodb[task_name]
-        user_name_list = list(filter(lambda name: name.find("target") < 0, task_db.collection_names()))
+        user_name_list = list(filter(lambda name: name.find("target") < 0 and name.find("system") < 0, task_db.collection_names()))
         for user_name in user_name_list:
             user_db = task_db[user_name]
             for dict in user_db.find():
                 if "费用" in dict.keys():
                     if user_name not in total_cost_info.keys():
-                        total_cost_info[user_name] = 0.0
+                        total_cost_info[user_name] = 0.00
                     try:
                         total_cost_info[user_name] += float(dict["费用"])
                     except Exception as e:
-                        # print(e)
+                        print(e)
                         continue
+                total_cost_info[user_name] = round(total_cost_info[user_name],2)
     resp_jsondata = json.dumps({"total_cost_info": total_cost_info})
     return HttpResponse(resp_jsondata)
