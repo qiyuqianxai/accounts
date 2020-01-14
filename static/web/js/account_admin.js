@@ -1,5 +1,6 @@
 // 当前时间月
 g_current_date = "";
+
 // 当前任务名称
 g_current_task_name = "";
 
@@ -14,6 +15,9 @@ g_all_date_task_dict = {};
 
 // 月份与标注人对照
 g_all_date_labeler_dict = {};
+
+// 当前复制的任务
+g_copy_content = {};
 
 $(function () {
     jQuery(document).ajaxSend(function(event, xhr, settings) {
@@ -181,12 +185,20 @@ function update_date_list() {
             $('.task_name').blur().on('click',function () {
                 g_task_name = $(this).text();
                 get_task_info(g_current_date+"-"+g_task_name);
+                $('.task_name').each(function () {
+                    $(this).css("color","");
+                });
+                $(this).css("color","red");
             });
 
             // 响应标注人
             $('.labeler_name').blur().on('click', function () {
                 g_labeler_name = $(this).text();
-                get_labeler_info()
+                get_labeler_info();
+                $('.labeler_name').each(function () {
+                    $(this).css("color","");
+                });
+                $(this).css("color","red");
             })
 
             },
@@ -295,7 +307,9 @@ function get_task_info(task_name) {
 
 // 展示指标编辑页面
 function show_target_info(target) {
-    var table_html = "<tr><th>"+g_current_date+"-"+g_task_name+"</th></tr><tr><th style='margin: 0px; padding: 0px'>指标</th><th style='margin: 0px; padding: 0px'>单价</th><th style='margin: 0px; padding: 0px'>操作</th></tr>";
+    var table_html = "<tr><th>"+g_current_date+"-"+g_task_name+"</th>" +
+        "<th><a id='copy_task'>复制该任务</a></th></tr>" +
+        "<tr><th style='margin: 0px; padding: 0px'>指标</th><th style='margin: 0px; padding: 0px'>单价</th><th style='margin: 0px; padding: 0px'>操作</th></tr>";
     $.each(target,function (key,val) {
         if (key.indexOf("每小时任务标注量")>-1||key.indexOf("任务总数")>-1)
         {
@@ -339,7 +353,12 @@ function show_target_info(target) {
             "</tr>";
 
         $("#show-table").append(add_target_html);
+    });
 
+    $("#copy_task").blur().on("click",function () {
+        g_copy_content["date"] = g_current_date;
+        g_copy_content["task"] = g_task_name;
+        console.log(g_copy_content);
     });
 }
 
@@ -559,7 +578,6 @@ function save_child_task_info() {
             },
         error:function(data){
             console.log(data);
-            top.location.reload()
         }
     });
 }
@@ -617,11 +635,44 @@ function get_total_cost() {
             $.each(total_cost_info,function (key,val) {
                 table_html+="<tr><th>"+key+"</th><th>"+g_current_date+"总费用</th><th>"+val+"</th></tr>"
             });
+            table_html+="<tr><th><a id='paste_task'>粘贴任务</a></th></tr>";
             $("#table-container").html(table_html);
             $("#target-option").html("");
+
+            $("#paste_task").blur().on("click",function () {
+                if(g_copy_content !== {})
+                {
+                    paste_new_task();
+                }
+            })
             },
         error:function(data){
             alert(data.responseJSON["msg"]);
+        }
+    });
+}
+
+// 粘贴复制的任务
+function paste_new_task() {
+    var dataurl = '/paste_new_task/';
+    // 获取页面上的信息
+    var data=JSON.stringify({
+        copy_content: g_copy_content,
+        dst_date: g_current_date,
+    });
+    $.ajax({
+        url:dataurl,
+        contentType: "application/json; charset=utf-8",
+        data:data,
+        type:"POST",
+        success:function(data){
+            var data_json = JSON.parse(data);
+            var msg = data_json["msg"];
+            alert(msg);
+            update_date_list();
+            },
+        error:function(data){
+            console.log(data);
         }
     });
 }

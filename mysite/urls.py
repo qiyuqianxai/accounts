@@ -38,6 +38,8 @@ urlpatterns = [
     url(r'^get_labeler_info/$', account_admin_views.get_labeler_info),
     url(r'^save_labeler_info/$', account_admin_views.save_labeler_info),
     url(r'^admin_get_total_cost/$', account_admin_views.admin_get_total_cost),
+    url(r'^get_all_task_info/$', account_admin_views.get_all_task_info),
+    url(r'^paste_new_task/$', account_admin_views.paste_new_task),
     # 标注员结账页面
     url(r'^get_date_and_task/$', account_labeler_views.get_date_and_task),
     url(r'^account_labeler/$', account_labeler_views.index),

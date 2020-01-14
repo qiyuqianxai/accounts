@@ -227,3 +227,49 @@ def admin_get_total_cost(request):
                 total_cost_info[user_name] = round(total_cost_info[user_name],2)
     resp_jsondata = json.dumps({"total_cost_info": total_cost_info})
     return HttpResponse(resp_jsondata)
+
+def get_all_task_info(request):
+    if "user_name" not in request.session:
+        response = JsonResponse({"msg": "抱歉，请先登录！"})
+        response.status_code = 403
+        return response
+    user = request.session["user_name"]  # 当前用户
+    if user != "zhangqi":
+        response = JsonResponse({"msg": "抱歉，您没有权限浏览此页面！"})
+        response.status_code = 403
+        return response
+    all_task_db = mongodb["task_db"]
+    cols = all_task_db["info"]
+    all_date = cols.find_one()["all_date"]
+    all_task_info = []
+    for date in all_date:
+        task_list = list(filter(lambda name: name.find(date) > -1, mongodb.database_names()))
+        for task_name in task_list:
+            task_db = mongodb[task_name]
+            target = task_db["target"].find_one()
+            if "_id" in target:
+                target.pop("_id")
+            if "info_name" in target:
+                target.pop("info_name")
+            all_task_info.append({task_name:target})
+    resp_jsondata = json.dumps(all_task_info, indent=4, ensure_ascii=False)
+    return HttpResponse(resp_jsondata,content_type="text/json/html;charset=UTF-8")
+
+def paste_new_task(request):
+    data_json = json.loads(request.body)
+    copy_content = data_json["copy_content"]
+    src_task = copy_content["date"]+"-"+copy_content["task"]
+    dst_task = data_json["dst_date"]+"-"+copy_content["task"]
+
+    target = mongodb[src_task]["target"].find_one()
+    if "_id" in target:
+        target.pop("_id")
+
+    dst_target_col = mongodb[dst_task]["target"]
+    dst_target_col.remove({"info_name": "task_target"})
+    dst_target_col.update({"info_name": "task_target"}, {'$set': target}, True)
+    print("任务粘贴成功")
+    resp_jsondata = json.dumps({"msg": "更新成功！"})
+    return HttpResponse(resp_jsondata)
+
+

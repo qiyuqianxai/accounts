@@ -97,6 +97,10 @@ $(function () {
             $(".task_name").on("click",function () {
                 g_task_name = $(this).text();
                 get_task_info();
+                $('.task_name').each(function () {
+                    $(this).css("color","");
+                });
+                $(this).css("color","red");
             })
             },
         error:function(data){
