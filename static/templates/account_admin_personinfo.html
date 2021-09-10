@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html class="no-js" lang="en">
+<head>
+
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>标注员个人信息</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/vendor.css">
+    <link rel="stylesheet" href="css/main.css">
+
+    <!-- script
+    ================================================== -->
+    <script src="js/modernizr.js"></script>
+
+</head>
+
+<body>
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header" style="width: 371.2px;">
+
+            <div>
+                <div class="header__logo">
+                    <a href="#" style="margin-bottom: 15px;">
+                        <span>姓名：{% block mark_name %}{% endblock %}</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="margin-bottom: 15px;">
+                        <span>工龄：{% block work_year %}{% endblock %}</span>
+                    </a>
+                </div>
+                <div>
+                    <a href="#" style="margin-bottom: 15px;">
+                        <span>职级：{% block grade %}{% endblock %}</span>
+                    </a>
+                </div>
+            </div> <!-- end header__top -->
+
+        </header> <!-- end s-header -->
+
+        <div class="s-content" style="padding-left: 400px;">
+            
+            <div class="masonry-wrap">
+
+                <div class="masonry" id="main-container">
+                    <div id="table-container"></div>
+                    <div id="target-option">
+                    </div>
+                </div> <!-- end masonry -->
+
+            </div> <!-- end masonry-wrap -->
+
+            <!--<div class="row">-->
+                <!--<div class="column large-full">-->
+                    <!--<nav class="pgn">-->
+                        <!--<ul>-->
+                            <!--<li><a class="pgn__prev" href="#0">Prev</a></li>-->
+                            <!--<li><a class="pgn__num" href="#0">1</a></li>-->
+                            <!--<li><span class="pgn__num current">2</span></li>-->
+                            <!--<li><a class="pgn__num" href="#0">3</a></li>-->
+                            <!--<li><a class="pgn__num" href="#0">4</a></li>-->
+                            <!--<li><a class="pgn__num" href="#0">5</a></li>-->
+                            <!--<li><span class="pgn__num dots">…</span></li>-->
+                            <!--<li><a class="pgn__num" href="#0">8</a></li>-->
+                            <!--<li><a class="pgn__next" href="#0">Next</a></li>-->
+                        <!--</ul>-->
+                    <!--</nav>-->
+                <!--</div>-->
+            <!--</div>-->
+
+        </div> <!-- end s-content -->
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer">
+            <div class="row">
+                <div class="column large-full footer__content">
+                    <!--<div>作者<a href="http://sc.chinaz.com/moban/">云从研究院 彭于波</a></div>-->
+                </div>
+            </div>
+
+            <div class="go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
+            </div>
+        </footer>
+
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="js/jquery-3.2.1.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/account_admin.js"></script>
+</body>

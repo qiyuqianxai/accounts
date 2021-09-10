@@ -4,10 +4,13 @@
 from django.shortcuts import render, redirect
 from login.models import User
 from login.forms import UserForm, RegisterForm
-
+import pymongo
 import hashlib
 import os
 import json
+
+mongodb = pymongo.MongoClient("10.128.128.82", 27017)
+persondb = mongodb["all_person_info"]
 
 def hash_code(s, salt='mysite'):# 加点盐
     h = hashlib.sha256()
@@ -50,7 +53,6 @@ def index(request):
     #     # 登录状态不允许注册。你可以修改这条原则！
     return render(request, 'login/index.html', {'imglibs': imglibs, 'imgstr':json.dumps(imglibs)})
 
-
 def login(request):
     if request.session.get('is_login', None):
         return redirect("/index/")
@@ -61,26 +63,27 @@ def login(request):
             username = login_form.cleaned_data['username']
             password = login_form.cleaned_data['password']
             try:
-                user = User.objects.get(name=username)
                 print(username)
-                # print(User.objects.all())
-                #print(username, user.passwd, hash_code(password))
-                #if user.passwd == hash_code(password):  # 哈希值和数据库内的值进行比对
-                if user.passwd == password:
-                    request.session['is_login'] = True
-                    request.session['user_id'] = user.id
-                    request.session['user_name'] = user.name
-                    return redirect('/index/')
+                user_names = persondb.collection_names()
+                if username in user_names:
+                    user_info_dict = persondb[username].find_one()
+                    if user_info_dict["密码"] == password and user_info_dict["状态"] == "正常":
+                        request.session['is_login'] = True
+                        request.session['user_id'] = str(user_info_dict["_id"])
+                        request.session['auth'] = user_info_dict["权限"]
+                        request.session['user_name'] = username
+                        return redirect('/index/')
+                    else:
+                        message = "密码不正确或者该账户已被禁用！"
                 else:
-                    message = "密码不正确！"
+                    message = "用户不存在！"
             except Exception as e:
                 print(e)
-                message = "用户不存在！"
+                message = "登录出错，请联系管理员！"
         return render(request, 'login/login.html', locals())
 
     login_form = UserForm()
     return render(request, 'login/login.html', locals())
-
 
 def register(request):
     if request.session.get('is_login', None):
@@ -99,24 +102,24 @@ def register(request):
                 message = "两次输入的密码不同！"
                 return render(request, 'login/register.html', locals())
             else:
-                same_name_user = User.objects.filter(name=username)
-                if same_name_user:  # 用户名唯一
+                usernames = persondb.collection_names()
+                if username in usernames:
                     message = '用户已经存在，请重新选择用户名！'
                     return render(request, 'login/register.html', locals())
-                #same_email_user = User.objects.filter(email=email)
-                #if same_email_user:  # 邮箱地址唯一
-                #    message = '该邮箱地址已被注册，请使用别的邮箱！'
-                #    return render(request, 'login/register.html', locals())
 
                 # 当一切都OK的情况下，创建新用户
-
-                new_user = User()
-                new_user.name = username
-                #new_user.passwd = hash_code(password1)  # 使用加密密码
-                new_user.passwd = password1
-                #new_user.email = email
-                #new_user.sex = sex
-                new_user.save()
+                person_col = persondb[username]
+                base_dict = {
+                    "用户名":username,
+                    "密码":password1,
+                    "权限":"normal",
+                    "姓名":"",
+                    "职级":"",
+                    "工龄":"",
+                    "身份证号码":"",
+                    "银行卡号":""
+                }
+                person_col.update({"用户名":username},{'$set': base_dict}, True)
                 return redirect('/login/')  # 自动跳转到登录页面
     register_form = RegisterForm()
     return render(request, 'login/register.html', locals())

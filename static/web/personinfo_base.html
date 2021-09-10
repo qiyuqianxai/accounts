@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+{% load staticfiles %}
+<html class="no-js" lang="en">
+<head>
+    <!--- basic page needs
+    ================================================== -->
+    <meta charset="utf-8">
+    <title>标注工资平台信息统计</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- mobile specific metas
+    ================================================== -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS
+    ================================================== -->
+    <link rel="stylesheet" href="{% static 'web/css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/vendor.css' %}">
+    <link rel="stylesheet" href="{% static 'web/css/main.css' %}">
+
+    <!-- script
+    ================================================== -->
+    <script src="{% static 'web/js/modernizr.js' %}"></script>
+</head>
+
+<body>
+    <!-- preloader
+    ================================================== -->
+    <div id="preloader">
+        <div id="loader" class="dots-fade">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div id="top" class="s-wrap site-wrapper">
+
+        <!-- site header
+        ================================================== -->
+        <header class="s-header" style="width: 371.2px;">
+            {% block head %}{% endblock %}
+        </header> <!-- end s-header -->
+
+        <div class="s-content" style="padding-left: 400px;">
+            
+            <div class="masonry-wrap">
+
+                <div class="masonry" id="main-container">
+                    <div id="select_area"></div>
+                    <div id="month_base_info"></div>
+                    <div id="month_task_info"></div>
+                    <div id="month_person_info"></div>
+                </div> <!-- end masonry -->
+
+            </div> <!-- end masonry-wrap -->
+
+
+        </div> <!-- end s-content -->
+
+        <!-- footer
+        ================================================== -->
+        <footer class="s-footer">
+            <div class="row">
+                <div class="column large-full footer__content">
+                    <!--<div>作者<a href="http://sc.chinaz.com/moban/">云从研究院 彭于波</a></div>-->
+                </div>
+            </div>
+
+            <div class="go-top">
+                <a class="smoothscroll" title="Back to Top" href="#top"></a>
+            </div>
+        </footer>
+
+    </div> <!-- end s-wrap -->
+
+
+    <!-- Java Script
+    ================================================== -->
+    <script src="{% static 'web/js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'web/js/plugins.js' %}"></script>
+    <script src="{% static 'web/js/main.js' %}"></script>
+    {% block js %}{% endblock %}
+</body>
+</html>

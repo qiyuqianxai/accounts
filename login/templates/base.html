@@ -20,6 +20,7 @@
     {% block css %}{% endblock %}
   </head>
   <body>
+    <img src="{% static 'web/images/back1.jpg' %}" style="width: 100%;height: 100%;top: 0px;left: 0px; position: absolute;z-index:-1">
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -37,24 +38,26 @@
             <span class="icon-bar"></span>
           </button>
           <!-- 内部包含了带有 class navbar-brand 的 <a> 元素。这会让文本看起来更大一号。 -->
-          <a class="navbar-brand" href="#">云从科技结账系统</a>
+          <a class="navbar-brand" href="#">云从科技数据信息系统</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse btn-warning" id="my-nav">
+        <div class="collapse navbar-collapse" id="my-nav">
           <ul class="nav navbar-nav">
             <li class="active"><a href="/index/">主页</a></li>
-              <li><a href="/account_labeler/">标注员</a></li>
-              <li><a href="/account_admin/">管理员</a></li>
+              <li><a href="/account_labeler/">工资平台-标注员</a></li>
+              <li><a href="/account_admin/">工资平台-管理员</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <!-- 如果您想在常规的导航栏导航组件内使用图标，那么请使用 class glyphicon glyphicon-* 来设置图标 -->
             {% if request.session.is_login %}
             <li><a href="#">当前登录： {{ request.session.user_name }}</a></li>
+                  <li><a href="/oa/" target="_blank">个人信息</a></li>
                   <li><a href="/logout/">退出</a></li>
+
               {% else %}
                   <li><a href="/login/">登录</a></li>
-                  <li><a href="/register/">注册</a></li>
+                  <!--<li><a href="/register/">注册</a></li>-->
             {% endif %}
           </ul>
         </div><!-- /.navbar-collapse -->

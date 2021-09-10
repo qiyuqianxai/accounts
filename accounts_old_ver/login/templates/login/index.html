@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+{% block title %}主页{% endblock %}
+
+{% block content %}
+    {% if request.session.is_login %}
+    <h1>你好,{{ request.session.user_name }}！欢迎回来！</h1>
+     <!-- <script>
+    function ChangeCameraList(){
+        var cameraList=document.getElementById("camera");
+        var timeList=document.getElementById("timeRange");
+        var selCamera=cameraList.options[cameraList.selectedIndex].value;
+        while (timeList.options.length){
+            timeList.remove(0);
+        }
+        document.write('b');
+        var txt = '{{ imgstr|safe }}';
+        var infos=JSON.parse(txt);
+        document.write('b');
+        /*var timeRange=infos[selCamera];
+        document.write(timeRange);
+        document.log("--- 两种字典的取值方式  ---")
+
+        for(i in timeRange){
+            var car=new Option(timeRange[i]);
+            timeList.options.add(car);
+        }*/
+
+    }
+    </script>
+    <form class="form-inline" role="form">
+    <div class="form-group">
+        <select class="form-control" onchange="ChangeCameraList();" id="camera">
+            <option> ----------选择摄像头----------</option>
+            {% for camera_id in imglibs.keys %}
+                <option> {{ camera_id  }} </option>
+            {% endfor %}
+        </select>
+        <select class="form-control"  id="timeRange">
+        </select>
+    </div>
+    </form> -->
+
+    <!--
+    {% for camera_id, cameraValue in imglibs.items %}
+        <li>{{ camera_id }}</li>
+        {% for person_id,  imgs in cameraValue.items %}
+            <li>{{ person_id }}</li>
+            {% for img in imgs %}
+                <img src="{% static  img %}">
+            {% endfor %}
+        {% endfor %}
+        <br>
+    {% endfor %} -->
+    {% else %}
+    <h1>请先登录！</h1>
+    {% endif %}
+
+{% endblock %}

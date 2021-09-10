@@ -1,0 +1,35 @@
+﻿{% extends 'web/personinfo_base.html' %}
+{% load staticfiles %}
+{% block head %}
+            <div class="header__top">
+                <div class="header__logo">
+                    <a class="site-logo" id="home">
+                        <!--<img src="images/logo.svg" alt="Homepage">-->
+                        <span>标注任务统计</span>
+                    </a>
+                </div>
+
+            </div> <!-- end header__top -->
+
+            <nav class="header__nav-wrap">
+
+                <ul class="header__nav">
+                    <li class="has-children">
+                        <a href="#0" title="">日期列表</a>
+                        <ul class="sub-menu" id="date_list">
+                        </ul>
+                    </li>
+                    <!--<li><a href="page-contact.html" title="">Contact</a></li>-->
+                </ul> <!-- end header__nav -->
+
+            </nav> <!-- end header__nav-wrap -->
+{% endblock %}
+{% block js %}
+<script src="{% static 'web/js/jquery-3.2.1.min.js' %}"></script>
+<script src="{% static 'web/js/static_task_info.js' %}"></script>
+<script src="{% static 'web/js/highcharts.js' %}"></script>
+<script src="{% static 'web/js/exporting.js' %}"></script>
+<!--<script src="{% static 'web/js/jquery-2.1.4.min.js' %}"></script>-->
+<!--<script type="text/javascript" src="http://www.pureexample.com/js/lib/jquery-1.8.3.min.js"></script>-->
+<script src="{% static 'web/js/jquery.flot.min.js' %}"></script>
+{% endblock %}

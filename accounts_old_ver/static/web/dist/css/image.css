@@ -1,0 +1,5 @@
+.img{height:100%;display:flex;justify-content:center;align-items:center}
+
+img{transition: all 0.8s;height:250px;width:250px;}
+
+img:hover{transform:scale(2);}

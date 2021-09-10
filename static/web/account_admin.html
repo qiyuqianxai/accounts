@@ -5,7 +5,7 @@
     <!--- basic page needs
     ================================================== -->
     <meta charset="utf-8">
-    <title>管理员结账页面</title>
+    <title>云从科技数据信息系统(重庆)-管理员界面</title>
     <meta name="description" content="">
     <meta name="author" content="">
 
@@ -25,9 +25,11 @@
 
 </head>
 
-<body>
+<body style="background: url('images/back1.jpg');background-repeat:repeat;background-size:100% 100%;
+background-attachment: fixed;">
     <!-- preloader
     ================================================== -->
+    <!--<img src="images/back.jpg" style="width: 100%;height: 100%;top: 0px;left: 0px; position: absolute;z-index:-1">-->
     <div id="preloader">
         <div id="loader" class="dots-fade">
             <div></div>
@@ -40,7 +42,7 @@
 
         <!-- site header
         ================================================== -->
-        <header class="s-header">
+        <header class="s-header" style="width: 371.2px;">
 
             <div class="header__top">
                 <div class="header__logo">
@@ -49,8 +51,13 @@
                     </a>
                 </div>
                 <div class="header__logo">
-                    <a href="/get_all_task_info/" style="margin-bottom: 15px;" target="_blank">
+                    <a href="/get_history_task_info/" style="margin-bottom: 15px;" target="_blank">
                         <span>查看历史任务信息</span>
+                    </a>
+                </div>
+                <div class="header__logo">
+                    <a style="margin-bottom: 15px;" target="_blank" id="summerize_info">
+                        <span>总体信息统计</span>
                     </a>
                 </div>
 
@@ -58,13 +65,41 @@
             <nav class="header__nav-wrap" style="margin-top: 0px;">
                 <ul class="header__nav">
                      <li class="has-children">
-                        <a href="#0" title="">编辑任务</a>
+                        <a href="#0" title="">新建/编辑任务</a>
                          <ul class="sub-menu" id="edit_date">
                         </ul>
                     </li>
                     <li class="has-children">
-                        <a href="#0" title="">人员信息</a>
+                        <a href="#0" title="">人员月工资信息核对</a>
                         <ul class="sub-menu" id="labeler_info">
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#0" title="">任务月工资信息核对</a>
+                        <ul class="sub-menu" id="task_info">
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#0" title="">任务信息统计</a>
+                        <ul class="sub-menu" id="task_done_info">
+                        </ul>
+                    </li>
+                    <li class="has-children">
+                        <a href="#0" title="">人员信息统计</a>
+                        <ul class="sub-menu" id="person_static_info">
+                            <li class="header__nav">
+                                <a href="#" title="" id="person_static_total_info" style="width: 280px;">整体人员信息</a>
+
+                                <li class="has-children">
+                                    <a href="#1" title="" style="width: 280px;font-size: medium">人员列表</a>
+                                            <ul class="sub-menu" id="person_static_name_list"></ul>
+                                </li>
+
+                                <li class="has-children">
+                                    <a href="#1" title="" style="width: 280px; font-size: medium">日期列表</a>
+                                            <ul class="sub-menu" id="person_static_date_list"></ul>
+                                </li>
+                            </li>
                         </ul>
                     </li>
                 </ul> <!-- end header__nav -->
@@ -75,35 +110,20 @@
 
         </header> <!-- end s-header -->
 
-        <div class="s-content">
+        <div class="s-content" style="padding-left: 400px;">
             
             <div class="masonry-wrap">
 
                 <div class="masonry" id="main-container">
                     <div id="table-container"></div>
-                    <div id="target-option">
+                    <div id="target-option"></div>
+                    <div id="select_area"></div>
+                    <div id="month_base_info"></div>
+                    <div id="month_task_info"></div>
                     </div>
                 </div> <!-- end masonry -->
 
             </div> <!-- end masonry-wrap -->
-
-            <!--<div class="row">-->
-                <!--<div class="column large-full">-->
-                    <!--<nav class="pgn">-->
-                        <!--<ul>-->
-                            <!--<li><a class="pgn__prev" href="#0">Prev</a></li>-->
-                            <!--<li><a class="pgn__num" href="#0">1</a></li>-->
-                            <!--<li><span class="pgn__num current">2</span></li>-->
-                            <!--<li><a class="pgn__num" href="#0">3</a></li>-->
-                            <!--<li><a class="pgn__num" href="#0">4</a></li>-->
-                            <!--<li><a class="pgn__num" href="#0">5</a></li>-->
-                            <!--<li><span class="pgn__num dots">…</span></li>-->
-                            <!--<li><a class="pgn__num" href="#0">8</a></li>-->
-                            <!--<li><a class="pgn__next" href="#0">Next</a></li>-->
-                        <!--</ul>-->
-                    <!--</nav>-->
-                <!--</div>-->
-            <!--</div>-->
 
         </div> <!-- end s-content -->
 
@@ -130,4 +150,7 @@
     <script src="js/plugins.js"></script>
     <script src="js/main.js"></script>
     <script src="js/account_admin.js"></script>
+    <script src="js/highcharts.js"></script>
+    <script src="js/exporting.js"></script>
+    <script src="../oa/assets/layui.all.js"></script>
 </body>

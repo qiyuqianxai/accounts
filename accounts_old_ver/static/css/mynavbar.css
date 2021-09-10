@@ -1,0 +1,15 @@
+.collapse {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #007bff;
+    color: white;
+}
+ul.nav {
+    list-style-type: none;
+    display: inline
+}
+
+li {
+    display: inline
+}
